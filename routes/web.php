@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\SobreNosController;
+use App\Http\Controllers\TesteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +18,21 @@ use App\Http\Controllers\SobreNosController;
 |
 */
 
-Route::get('/', [PrincipalController::class, 'principal']);
-Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos']);
-Route::get('/contato', [ContatoController::class, 'contato']);
+Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
+Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
+Route::get('/login', function(){return 'Login';})->name('site.login');
 
 
-//#expressão regular
-// Route::get(
-//     '/contato/{nome}/{categoria_id}', 
-//     function(
-//         string $nome= 'Desconhecido', 
-//         int $categoria_id = 1
-//         ) {
-//             echo "Estamos aqui: $nome  - $categoria_id";
-//         }
-//     )->where('categoria_id','[0-9]+')->where('nome','[A-Za-z]+'); 
+Route::prefix('/app')->group(function() {
+    Route::get('/clientes', function(){return 'clientes';})->name('app.clientes');
+    Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
+    Route::get('/produtos', function(){return 'produtos';})->name('app.produtos');
+});
 
-//#pasagem de parametro com parametro opcional
-// Route::get('/contato/{nome}/{categoria}/{assunto?}', function(string $nome, string $categoria, string $assunto = 'assunto não informado') {
-//     echo "Estamos aqui: $nome  - $categoria  -  $assunto";
-// });
+Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('site.teste');
 
+// Rota de fallback
+Route::fallback(function(){
+    echo 'A rota acessada não existe. <a href="'.route('site.index').'">Clique aqui<a> para retornar a página inicial';
+});

@@ -7,7 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>Contato (view)</h3>
+    <h3>Fornecedor Index (view)</h3>
+
+    {{-- Aqui fica o comentário que será descartado pelo interpretador do blade --}}
+
+    @php 
+        // Aqui fica o comentário que será descartado pelo interpretador do blade 
+    @endphp
 
     <ul>
         <li> <a href="{{ route('site.index')}}">Principal</a></li>
