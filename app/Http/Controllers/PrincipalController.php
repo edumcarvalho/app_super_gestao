@@ -10,6 +10,6 @@ class PrincipalController extends Controller
     public function principal() //isso pode ser conhecido como uma action
     {
         $motivo_contato = MotivoContato::all();
-        return view('site.principal',['motivo_contato' => $motivo_contato]);
+        return view('site.principal',['motivo_contatos' => $motivo_contato]);
     }
 }
